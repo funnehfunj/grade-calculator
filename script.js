@@ -36,11 +36,55 @@ function renderSubjects() {
         <p><strong>Project:</strong> ${subject.projectGrade}</p>
         <hr>
         <p><strong>Average:</strong> ${subject.average.toFixed(0)}</p>
+
+        <button class="editBtn">Edit</button>
         `
 
         subjectsContainer.appendChild(card)
     }
 }
+
+function editSubject(index) {
+    const subject = subjects[index];
+
+    const newName = prompt("Edit subject name:", subject.name);
+    const newOral = Number(prompt("Edit oral grade:", subject.oralGrades[0]));
+    const newTest = Number(prompt("Edit test grade:", subject.testGrade));
+    const newProject = Number(prompt("Edit project grade:", subject.projectGrade));
+
+    if (
+        newName.trim() === "" ||
+        isNaN(newOral) ||
+        isNaN(newTest) ||
+        isNaN(newProject)
+    ) {
+        alert("Invalid input!");
+        return;
+    }
+
+    const average = calculateSubjectAverage(newOral, newTest, newProject);
+
+    subjects[index] = {
+        name: newName,
+        oralGrades: [newOral],
+        testGrade: newTest,
+        projectGrade: newProject,
+        average
+    };
+
+    renderSubjects();
+}
+
+subjectsContainer.addEventListener("click", function (event) {
+
+    if (event.target.classList.contains("editBtn")) {
+
+        const index = Array.from(subjectsContainer.children)
+            .indexOf(event.target.closest(".subject-card"));
+
+        editSubject(index);
+    }
+})
 
 addSubjectBtn.addEventListener("click", function () {
     const name = subjectNameInput.value.trim()
