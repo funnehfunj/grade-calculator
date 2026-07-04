@@ -1,0 +1,86 @@
+* {
+    margin: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background-color: #0b54a315;
+    padding: 20px;
+}
+
+header {
+    background-color: #0b55a3;
+    color: white;
+    text-align: center;
+    letter-spacing: 10px;
+    margin-bottom: 0;
+    padding: 20px 0;
+}
+
+#inputSection {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #0b54a377;
+    border-radius: 6px;
+    flex: 1;
+    min-width: 120px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #0b55a3;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 3px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #1f4fb3;
+}
+
+#subjectsContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.subject-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #0b54a375;
+}
+
+.subject-card h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.subject-card p {
+    margin: 5px 0;
+}
+
+@media (max-width: 1000px) {
+    #subjectsContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    #subjectsContainer {
+        grid-template-columns: 1fr;
+    }
+}
