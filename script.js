@@ -38,6 +38,7 @@ function renderSubjects() {
         <p><strong>Average:</strong> ${subject.average.toFixed(0)}</p>
 
         <button class="editBtn">Edit</button>
+        <button class="deleteBtn">Delete</button>
         `
 
         subjectsContainer.appendChild(card)
@@ -75,6 +76,16 @@ function editSubject(index) {
     renderSubjects();
 }
 
+function deleteSubject(index) {
+    const confirmDelete = confirm("Are you sure you want to delete this subject?");
+
+    if (!confirmDelete) return;
+
+    subjects.splice(index, 1);
+
+    renderSubjects();
+}
+
 subjectsContainer.addEventListener("click", function (event) {
 
     if (event.target.classList.contains("editBtn")) {
@@ -83,6 +94,12 @@ subjectsContainer.addEventListener("click", function (event) {
             .indexOf(event.target.closest(".subject-card"));
 
         editSubject(index);
+    }
+    if (event.target.classList.contains("deleteBtn")) {
+        const index = Array.from(subjectsContainer.children)
+            .indexOf(event.target.closest(".subject-card"));
+
+        deleteSubject(index);
     }
 })
 
