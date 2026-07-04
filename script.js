@@ -73,6 +73,7 @@ function editSubject(index) {
         average
     };
 
+    saveSubjects()
     renderSubjects();
 }
 
@@ -83,8 +84,22 @@ function deleteSubject(index) {
 
     subjects.splice(index, 1);
 
+    saveSubjects()
     renderSubjects();
 }
+
+function saveSubjects() {
+    localStorage.setItem("subjects", JSON.stringify(subjects));
+}
+
+function loadSubjects() {
+    const data = localStorage.getItem("subjects")
+
+    if (data) subjects = JSON.parse(data)
+}
+
+loadSubjects()
+renderSubjects()
 
 subjectsContainer.addEventListener("click", function (event) {
 
@@ -130,6 +145,7 @@ addSubjectBtn.addEventListener("click", function () {
     }
 
     subjects.push(newSubject)
+    saveSubjects()
     renderSubjects()
 
     subjectNameInput.value = ''
