@@ -1,7 +1,11 @@
 let subjects = []
+filteredSubjects = []
+
+let currentFilter = "all"
 
 const addSubjectBtn = document.getElementById("addSubjectBtn")
 const subjectsContainer = document.getElementById("subjectsContainer")
+const gpaContainer = document.getElementById("gpaContainer")
 
 const subjectNameInput = document.getElementById("subjectName")
 const oralInput = document.getElementById("oralInput")
@@ -32,14 +36,19 @@ function calculateGPA() {
 }
 
 function renderGPA() {
-    const gpaContainer = document.getElementById("gpaContainer")
     gpaContainer.textContent = `Overall Average: ${calculateGPA().toFixed(2)}`
 }
 
 function renderSubjects() {
     subjectsContainer.innerHTML = ''
-    for (let i = 0; i < subjects.length; i++) {
-        const subject = subjects[i]
+
+    let filteredSubjects = [...subjects]
+
+    if (currentFilter !== "all") {
+        filteredSubjects = subjects.filter(subject => subject.name === currentFilter)
+    }
+    for (let i = 0; i < filteredSubjects.length; i++) {
+        const subject = filteredSubjects[i]
         const card = document.createElement("div")
         card.classList.add("subject-card")
 
@@ -59,6 +68,42 @@ function renderSubjects() {
         subjectsContainer.appendChild(card)
     }
 }
+
+function renderFilters() {
+    let filterSection = document.getElementById("filterSection")
+    filterSection.innerHTML = ""
+
+    const allBtn = document.createElement("button")
+    allBtn.textContent = "All Subjects"
+    allBtn.addEventListener("click", function () {
+        currentFilter = "all";
+        render()
+    })
+    filterSection.appendChild(allBtn)
+    
+    const subjectNames = []
+    
+    for (let i = 0; i < subjects.length; i++) {
+
+        const subject = subjects[i]
+
+        if (!subjectNames.includes(subject.name)) {
+            subjectNames.push(subject.name)
+
+            const filterBtn = document.createElement("button")
+            filterBtn.textContent = subject.name
+            filterBtn.classList.add("filterBtn")
+
+            filterBtn.addEventListener("click", function () {
+                currentFilter = subject.name;
+                render()
+            })
+            filterSection.appendChild(filterBtn)
+        }
+    }
+    
+}
+
 
 function editSubject(index) {
     const subject = subjects[index];
@@ -116,6 +161,7 @@ function loadSubjects() {
 function render() {
     renderSubjects()
     renderGPA()
+    renderFilters()
 }
 
 loadSubjects()
