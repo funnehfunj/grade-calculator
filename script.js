@@ -21,6 +21,21 @@ function calculateSubjectAverage(oral, test, project) {
     return (oral * 0.4) + (test * 0.4) + (project * 0.2)
 }
 
+function calculateGPA() {
+    if (subjects.length === 0) return 0
+    let sum = 0
+    for (let i = 0; i < subjects.length; i++) {
+        sum += subjects[i].average
+    }
+    
+    return sum / subjects.length
+}
+
+function renderGPA() {
+    const gpaContainer = document.getElementById("gpaContainer")
+    gpaContainer.textContent = `Overall Average: ${calculateGPA().toFixed(2)}`
+}
+
 function renderSubjects() {
     subjectsContainer.innerHTML = ''
     for (let i = 0; i < subjects.length; i++) {
@@ -74,7 +89,7 @@ function editSubject(index) {
     };
 
     saveSubjects()
-    renderSubjects();
+    render()
 }
 
 function deleteSubject(index) {
@@ -85,7 +100,7 @@ function deleteSubject(index) {
     subjects.splice(index, 1);
 
     saveSubjects()
-    renderSubjects();
+    render()
 }
 
 function saveSubjects() {
@@ -98,9 +113,13 @@ function loadSubjects() {
     if (data) subjects = JSON.parse(data)
 }
 
-loadSubjects()
-renderSubjects()
+function render() {
+    renderSubjects()
+    renderGPA()
+}
 
+loadSubjects()
+render()
 subjectsContainer.addEventListener("click", function (event) {
 
     if (event.target.classList.contains("editBtn")) {
@@ -146,7 +165,7 @@ addSubjectBtn.addEventListener("click", function () {
 
     subjects.push(newSubject)
     saveSubjects()
-    renderSubjects()
+    render()
 
     subjectNameInput.value = ''
     oralInput.value = ''
